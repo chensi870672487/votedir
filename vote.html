@@ -130,7 +130,6 @@
 		    overflow-y: hidden;
 			position:fixed
 			bottom:0;
-
 		}
 
 	</style>
@@ -182,15 +181,15 @@
 	<!-- 弹框 -->
 	
 	<script>
-		$(function() {  
+		$(function() {
+			$("html,body").animate({scrollTop(0)},0);
 		    FastClick.attach(document.body);
 		    $("#btn").click(function(event) {
+		    	event.preventDefault();
 		    	$(".shadeBox").show();
-		    	$('html,body').addClass('notScroll');
 		    });
 		    $("#closeBtn").click(function(event) {
 		    	$(".shadeBox").hide();
-		    	$('html,body').removeClass('notScroll');
 		    });
 		    var wHeight=$(window).height();
 		    $(".shadeBox").height(wHeight);
