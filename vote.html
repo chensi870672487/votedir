@@ -185,6 +185,7 @@
 		    FastClick.attach(document.body);
 		    $("#btn").click(function(event) {
 		    	event.preventDefault();
+		    	$('.wrapper').animate({scrollBottom:'0'},50);
 		    	$(".shadeBox").show();
 		    	$("html,body").addClass('notScroll');
 		    });
