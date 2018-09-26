@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>投票</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<script src="js/jquery-1.8.3.min.js"></script>
+	<script src="js/fastclick.js"></script>
+	<style>
+		html,body{
+			font-size:20px;
+			background: #DCEFEE;
+		}
+		html,body,p{
+			margin:0;
+			padding:0;
+		}
+		.wrapper{
+			position:relative;
+			width:100%;
+			padding-top: 1.2rem;
+			padding-bottom: 1.8rem;
+		}
+		.unit{
+			width:70%;
+			margin-left:15%;
+		}
+		.showImg{
+			width:100%;
+			margin-top: 1rem;
+		}
+		.unit p{
+			padding-left:1rem;
+			margin:0.5rem 0;
+			font-size:1rem;
+			color:#43A65D;
+		}
+		#btn{
+			width: 90%;
+		    margin-left: 5%;
+		    background: #43A65D;
+		    height: 2rem;
+		    line-height: 2rem;
+		    text-align: center;
+		    font-size: 1rem;
+		    margin-top: 2rem;
+		    border-radius: 0.3rem;
+		    color: #fff;
+		}
+		.num{
+			font-weight: 700;
+		}
+		input[type=checkbox]{
+			position: relative;
+		    opacity: 0;
+		    z-index: 2;
+		}
+		input+label{
+			position: relative;
+		    top: .2rem;
+		    left: -.8rem;
+			display: inline-block;
+		    width: 1rem;
+		    height: 1rem;
+		    border: 1px solid #43A65D;
+		    box-sizing: border-box;
+		}
+		input:checked+label{
+			display: inline-block;
+		    width: 1rem;
+		    height: 1rem;
+		    border: 1px solid #43A65D;
+		    box-sizing: border-box;
+		    background:url('images/right.png')  no-repeat center;
+		}
+		.tele{
+		    font-size: 1rem;
+		    color: #43A65D;
+		    font-weight: 700;
+		}
+		.inputTele{
+			width: 96%;
+		    border: 0.5px solid #43A65D;
+		    height: 1.4rem;
+		    line-height: 1.4rem;
+		    border-radius: 4px;
+		    margin-top: 0.5rem;
+		}
+		#closeBtn{
+		    width: 5rem;
+		    text-align: center;
+		    margin: 1rem auto;
+		    background: #43A65D;
+		    padding: 4px 0;
+		    border-radius: 0.3rem;
+		    font-size: 1rem;
+		    color: #fff;
+		}
+		/*遮罩层*/
+		.shadeBox{
+			display: none;
+			position: absolute;
+			bottom:0;
+			left:0;
+			width:100%;
+			background: rgba(0,0,0,0.6);
+		}
+		.t-box{
+			position: absolute;
+		    bottom: 43%;
+		    left: 50%;
+		    margin-left: -45%;
+		    width: 90%;
+		    height: 8rem;
+		    box-shadow: 0 0 1rem #43A65D;
+		    z-index: 99;
+		    background: #fff;
+		    border: 2px solid #43A65D;
+		    border-radius: .4rem;
+		    padding: 1rem;
+		    box-sizing: border-box;
+		}
+		/*遮罩层显示时body的样式*/
+		.notScroll {
+		    overflow: hidden;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="unit">
+			<img src="images/timg.jpg" alt="" class="showImg">
+			<p><input type="checkbox"><label for=""></label>请选择</p>
+			<p class="t-count">票数：<span class="num">2222</span></p>
+		</div>
+		<div class="unit">
+			<img src="images/timg.jpg" alt="" class="showImg">
+			<p><input type="checkbox"><label for=""></label>请选择</p>
+			<p class="t-count">票数：<span class="num">2222</span></p>
+		</div>
+		<div class="unit">
+			<img src="images/timg.jpg" alt="" class="showImg">
+			<p><input type="checkbox"><label for=""></label>请选择</p>
+			<p class="t-count">票数：<span class="num">2222</span></p>
+		</div>
+		<div class="unit">
+			<img src="images/timg.jpg" alt="" class="showImg">
+			<p><input type="checkbox"><label for=""></label>请选择</p>
+			<p class="t-count">票数：<span class="num">2222</span></p>
+		</div>
+		<div class="unit">
+			<img src="images/timg.jpg" alt="" class="showImg">
+			<p><input type="checkbox"><label for=""></label>请选择</p>
+			<p class="t-count">票数：<span class="num">2222</span></p>
+		</div>
+		<div class="unit">
+			<img src="images/timg.jpg" alt="" class="showImg">
+			<p><input type="checkbox"><label for=""></label>请选择</p>
+			<p class="t-count">票数：<span class="num">2222</span></p>
+		</div>
+		<div id="btn">投票</div>
+		<div class="shadeBox">
+			 <div class="t-box">
+				<label for="" class="tele">手机号：</label>
+				<br>
+				<input type="text" class="inputTele">
+				<br>
+				<div id="closeBtn">确定</div>
+			</div>
+		</div>
+		
+	</div>
+	<!-- 弹框 -->
+	
+	<script>
+		$(function() {  
+		    FastClick.attach(document.body);
+		    $("#btn").click(function(event) {
+		    	$(".shadeBox").show();
+		    	$('html,body').addClass('notScroll');
+		    });
+		    $("#closeBtn").click(function(event) {
+		    	$(".shadeBox").hide();
+		    	$('html,body').removeClass('notScroll');
+		    });
+		    var wHeight=$(window).height();
+		    $(".shadeBox").height(wHeight);
+		}); 
+	</script>
+</body>
+</html>
