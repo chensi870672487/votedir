@@ -193,6 +193,9 @@
 		    	$(".shadeBox").hide();
 		    	$("html,body").removeClass('notScroll');
 		    });
+		    $(".shadeBox").on('touchmove',function(){
+		    	event.preventDefault();
+		    });
 		    var wHeight=$(window).height();
 		    $(".shadeBox").height(wHeight);
 		}); 
