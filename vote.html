@@ -54,6 +54,22 @@
 		    border-radius: 0.3rem;
 		    color: #fff;
 		}
+		#vote_btn{
+			display:none;
+			width: 90%;
+		    margin-left: 5%;
+		    background: #43A65D;
+		    height: 2rem;
+		    line-height: 2rem;
+		    text-align: center;
+		    font-size: 1rem;
+		    margin-top: 2rem;
+		    border-radius: 0.3rem;
+		    color: #fff;
+		}
+		.grey_btn{
+			background: #ccc!important;
+		}
 		.num{
 			font-weight: 700;
 		}
@@ -107,7 +123,17 @@
 		    font-size: 1rem;
 		    color: #fff;
 		}
-		/*遮罩层*/
+		#sureBtn{
+			width: 5rem;
+		    text-align: center;
+		    margin: 2rem auto 1rem;
+		    background: #43A65D;
+		    padding: 4px 0;
+		    border-radius: 0.3rem;
+		    font-size: 1rem;
+		    color: #fff;
+		}
+		/*手机号遮罩层*/
 		.shadeBox{
 			display: none;
 			position: absolute;
@@ -131,45 +157,102 @@
 		    padding: 1rem;
 		    box-sizing: border-box;
 		}
-
+		/*成功遮罩层*/
+		.successBox{
+			display: none;
+			position: absolute;
+			bottom:0;
+			left:0;
+			width:100%;
+			background: rgba(0,0,0,0.6);
+		}
+		.innerBox{
+			position: absolute;
+		    bottom: 43%;
+		    left: 50%;
+		    margin-left: -45%;
+		    width: 90%;
+		    height: 9rem;
+		    box-shadow: 0 0 1rem #43A65D;
+		    z-index: 99;
+		    background: #fff;
+		    border: 2px solid #43A65D;
+		    border-radius: .4rem;
+		    padding: 1rem;
+		    box-sizing: border-box;
+		}
+		.banner{
+			width:90%;
+			height:10rem;
+			margin-left:5%;
+			background:#E84E08;
+		}
+		.bannerImg{
+			width:100%;
+			height:100%;
+		}
+		.rule{
+			width:90%;
+			height:12rem;
+			margin-left:5%;
+			margin-top: 1.5rem;
+			background:#ccc;
+			padding-top: 1rem;
+		}
+		.rule-title{
+			text-align: center;
+			font-size:1rem;
+		}
+		.tips{
+			text-align: center;
+    		margin-top: 1.2rem;
+		}
 	</style>
 </head>
 <body>
 	<div class="wrapper">
-		<div class="unit">
-			<div class="imgBox">
-				<img src="images/timg.jpg" alt="" class="showImg">
+		<div class="banner">
+			<!-- <img src="images/timg.jpg" alt="" class="bannerImg"> -->
+		</div>
+		<div class="rule">
+			<p class="rule-title">---  这里是规则说明  ---</p>
+		</div>
+		<div class="listBox">
+			<div class="unit">
+				<div class="imgBox">
+					<img src="images/timg.jpg" alt="" class="showImg">
+				</div>
+				<p class="t-count">票数：<span class="num">2222</span></p>
 			</div>
-			<p><input type="checkbox"><label for=""></label>请选择</p>
-			<p class="t-count">票数：<span class="num">2222</span></p>
+			<div class="unit">
+				<div class="imgBox">
+					<img src="images/timg.jpg" alt="" class="showImg">
+				</div>
+				<p class="t-count">票数：<span class="num">2222</span></p>
+			</div>
+			<div class="unit">
+				<div class="imgBox">
+					<img src="images/timg.jpg" alt="" class="showImg">
+				</div>
+				<p class="t-count">票数：<span class="num">2222</span></p>
+			</div>
+			<div class="unit">
+				<div class="imgBox">
+					<img src="images/timg.jpg" alt="" class="showImg">
+				</div>
+				<p class="t-count">票数：<span class="num">2222</span></p>
+			</div>
+			<div class="unit">
+				<div class="imgBox">
+					<img src="images/timg.jpg" alt="" class="showImg">
+				</div>
+				<p><input type="checkbox"><label for=""></label>请选择</p>
+				<p class="t-count">票数：<span class="num">2222</span></p>
+			</div>
 		</div>
-		<div class="unit">
-			<img src="images/timg.jpg" alt="" class="showImg">
-			<p><input type="checkbox"><label for=""></label>请选择</p>
-			<p class="t-count">票数：<span class="num">2222</span></p>
-		</div>
-		<div class="unit">
-			<img src="images/timg.jpg" alt="" class="showImg">
-			<p><input type="checkbox"><label for=""></label>请选择</p>
-			<p class="t-count">票数：<span class="num">2222</span></p>
-		</div>
-		<div class="unit">
-			<img src="images/timg.jpg" alt="" class="showImg">
-			<p><input type="checkbox"><label for=""></label>请选择</p>
-			<p class="t-count">票数：<span class="num">2222</span></p>
-		</div>
-		<div class="unit">
-			<img src="images/timg.jpg" alt="" class="showImg">
-			<p><input type="checkbox"><label for=""></label>请选择</p>
-			<p class="t-count">票数：<span class="num">2222</span></p>
-		</div>
-		<div class="unit">
-			<img src="images/timg.jpg" alt="" class="showImg">
-			<p><input type="checkbox"><label for=""></label>请选择</p>
-			<p class="t-count">票数：<span class="num">2222</span></p>
-		</div>
-		<div id="btn">投票</div>
-		<!-- 弹框 -->
+		<div id="btn" class="">我要投票</div>
+		<div id="vote_btn" class="">投票</div>
+		<!-- 手机号弹框 -->
 		<div class="shadeBox">
 			 <div class="t-box">
 				<label for="" class="tele">手机号：</label>
@@ -179,25 +262,43 @@
 				<div id="closeBtn">确定</div>
 			</div>
 		</div>
-		
+		<!-- 成功投票弹框 -->
+		<div class="successBox">
+			 <div class="innerBox">
+				<p class="tips">您已成功投票！</p>
+				<div id="sureBtn">确定</div>
+			</div>
+		</div>
 	</div>
 	
 	<script>
 		$(function() {
+			var Http_Header='';
+			// 返回页面最顶部
 			$('html,body').animate({scrollTop:'0'},50);
+			// 初始化快速点击事件
 		    FastClick.attach(document.body);
 		    $("#btn").click(function(event) {
-		    	event.preventDefault();
 		    	$(".shadeBox").show();
+		    });
+		    $("#vote_btn").click(function(event) {
+		    	$(".successBox").show();
 		    });
 		    $("#closeBtn").click(function(event) {
 		    	$(".shadeBox").hide();
 		    });
+		    $("#sureBtn").click(function(event) {
+		    	$(".successBox").hide();
+		    });
 		    $(".shadeBox").on('touchmove',function(){
+		    	// 阻止浏览器默认行为
 		    	event.preventDefault();
 		    });
+		    // 设置遮罩高度
 		    var wHeight=window.screen.height;
 		    $(".shadeBox").height(wHeight);
+		    $(".successBox").height(wHeight);
+
 		}); 
 	</script>
 </body>
