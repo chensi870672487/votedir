@@ -63,7 +63,7 @@
 		    line-height: 2rem;
 		    text-align: center;
 		    font-size: 1rem;
-		    margin-top: 2rem;
+		    margin-top: 1rem;
 		    border-radius: 0.3rem;
 		    color: #fff;
 		}
@@ -116,7 +116,7 @@
 		#closeBtn{
 		    width: 5rem;
 		    text-align: center;
-		    margin: 1rem auto;
+		    margin: .6rem auto;
 		    background: #43A65D;
 		    padding: 4px 0;
 		    border-radius: 0.3rem;
@@ -148,7 +148,7 @@
 		    left: 50%;
 		    margin-left: -45%;
 		    width: 90%;
-		    height: 9rem;
+		    height: 10rem;
 		    box-shadow: 0 0 1rem #43A65D;
 		    z-index: 99;
 		    background: #fff;
@@ -204,8 +204,29 @@
 			font-size:1rem;
 		}
 		.tips{
+			height: 1.2rem;
 			text-align: center;
     		margin-top: 1.2rem;
+		}
+		.unit p.descTitle{
+			font-size:.8rem;
+			color:#000;
+		}
+		.tips_tele{
+			height: 1rem;
+		    line-height: 1rem;
+		    color: red;
+		    font-size: .7rem;
+		    text-align: center;
+		    margin-top: .5rem;
+		}
+		.inputNumTips{
+			text-align: center;
+		    color: red;
+		    font-size: .7rem;
+		    height: 1rem;
+		    line-height: 1rem;
+		    margin-top: 2rem;
 		}
 	</style>
 </head>
@@ -222,24 +243,7 @@
 				<div class="imgBox">
 					<img src="images/timg.jpg" alt="" class="showImg">
 				</div>
-				<p class="t-count">票数：<span class="num">2222</span></p>
-			</div>
-			<div class="unit">
-				<div class="imgBox">
-					<img src="images/timg.jpg" alt="" class="showImg">
-				</div>
-				<p class="t-count">票数：<span class="num">2222</span></p>
-			</div>
-			<div class="unit">
-				<div class="imgBox">
-					<img src="images/timg.jpg" alt="" class="showImg">
-				</div>
-				<p class="t-count">票数：<span class="num">2222</span></p>
-			</div>
-			<div class="unit">
-				<div class="imgBox">
-					<img src="images/timg.jpg" alt="" class="showImg">
-				</div>
+				<p class="descTitle">民权县第三实验小学-丝路之歌</p>
 				<p class="t-count">票数：<span class="num">2222</span></p>
 			</div>
 			<div class="unit">
@@ -250,6 +254,7 @@
 				<p class="t-count">票数：<span class="num">2222</span></p>
 			</div>
 		</div>
+		<p class="inputNumTips"></p>
 		<div id="btn" class="">我要投票</div>
 		<div id="vote_btn" class="">投票</div>
 		<!-- 手机号弹框 -->
@@ -257,15 +262,16 @@
 			 <div class="t-box">
 				<label for="" class="tele">手机号：</label>
 				<br>
-				<input type="text" class="inputTele">
+				<input type="text" class="inputTele" id="teleId">
 				<br>
+				<p class="tips_tele"></p>
 				<div id="closeBtn">确定</div>
 			</div>
 		</div>
 		<!-- 成功投票弹框 -->
 		<div class="successBox">
 			 <div class="innerBox">
-				<p class="tips">您已成功投票！</p>
+				<p class="tips"></p>
 				<div id="sureBtn">确定</div>
 			</div>
 		</div>
@@ -273,7 +279,10 @@
 	
 	<script>
 		$(function() {
-			var Http_Header='';
+		    var Http_Header='http://192.168.10.139:8080';
+		    var regTele=/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+		    var arrayVote=[];
+		    var mobile='';
 			// 返回页面最顶部
 			$('html,body').animate({scrollTop:'0'},50);
 			// 初始化快速点击事件
@@ -282,13 +291,40 @@
 		    	$(".shadeBox").show();
 		    });
 		    $("#vote_btn").click(function(event) {
-		    	$(".successBox").show();
+		    	arrayVote=[];
+		    	var checkboxList=$('.checkbox');
+		    	$(checkboxList).each(function(index,item){
+		    		if($(item).prop("checked")){
+		    			arrayVote.push($(item).attr('data-id'));
+		    		}
+		    	});
+		    	alert(arrayVote);
+		    	alert(arrayVote.length);
+		    	if(arrayVote.length==0){
+		    		$(".inputNumTips").text('您还没有选择作品！');
+		    	}else if(arrayVote.length>20){
+		    		$(".inputNumTips").text('最多选择20个作品！');
+		    	}else{
+		    		$(".inputNumTips").text();
+		    		submitVotelist(mobile,arrayVote.join(','));
+		    	}
 		    });
 		    $("#closeBtn").click(function(event) {
-		    	$(".shadeBox").hide();
+		    	var teleNum=$("#teleId").val();
+		    	if(teleNum===''){
+		    		$(".tips_tele").text('手机号不能为空！');
+		    		return;
+		    	}else if(!regTele.test(teleNum)){
+		    		$(".tips_tele").text('请输入正确手机号！');
+		    		return;
+		    	}else{
+		    		$(".tips_tele").text('');
+		    	}
+		    	getVotelist(teleNum);
 		    });
 		    $("#sureBtn").click(function(event) {
 		    	$(".successBox").hide();
+		    	getVotelist('');
 		    });
 		    $(".shadeBox").on('touchmove',function(){
 		    	// 阻止浏览器默认行为
@@ -298,7 +334,110 @@
 		    var wHeight=window.screen.height;
 		    $(".shadeBox").height(wHeight);
 		    $(".successBox").height(wHeight);
-
+		    $('#teleId').blur(function(){
+		    	var teleN=$(this).val();
+		    	if(teleN===''){
+		    		$(".tips_tele").text('手机号不能为空！');
+		    	}else if(!regTele.test(teleN)){
+		    		$(".tips_tele").text('请输入正确手机号！');
+		    	}else{
+		    		$(".tips_tele").text('');
+		    	}
+		    });
+		    getVotelist('');
+		    // 获取投票列表
+		    function getVotelist(voter){
+		    	if(voter==''){
+		    		$('#vote_btn').hide();
+		    		$('#btn').show();
+		    		$.ajax({
+				    	url: Http_Header + "/xc/sjdWorksInfo",
+			            type: "GET",
+			            data: {
+		            		'voter':voter
+		            	},
+			            dataType : 'json',
+			            success: function(data) {
+			            	console.log(data);
+			                if (data.resultCode == 200) {
+			                    var list= data.candidates,html='';
+			                    $(data.candidates).each(function(index,item){
+			                    	if(item.votes=='null'){
+					            		item.votes=0;
+					            	}
+			                    	html+='<div class="unit"><div class="imgBox"><img src="'+item.figure+'" alt="" class="showImg"></div><p class="descTitle">'+item.school+'-'+item.title+'</p><p class="t-count">票数：<span class="num">'+item.votes+'</span></p></div>';
+			                    });
+			                    $(".listBox").empty();
+			                    $(".listBox").append(html);
+			                } else {
+			                    $("#alert_msg_id").html(data.resultMessage).show();                    
+			                }
+			            },
+			            error: function(data) {
+			                $("#alert_msg_id").html("网络连接错误").show();                
+			            }
+				    });
+		    	}else{
+		    		$('#vote_btn').show();
+		    		$('#btn').hide();
+		    		mobile=voter;
+		    		$.ajax({
+				    	url: Http_Header + "/xc/sjdWorksInfo",
+			            type: "GET",
+			            data: {
+		            		'voter':voter
+		            	},
+			            dataType : 'json',
+			            success: function(data) {
+		    				$(".shadeBox").hide();
+			            	console.log(data);
+			                if (data.resultCode == 200) {
+			                    var list= data.candidates,html='';
+			                    $(data.candidates).each(function(index,item){
+			                    	if(item.votes=='null'){
+					            		item.votes=0;
+					            	}
+			                    	html+='<div class="unit"><div class="imgBox"><img src="'+item.figure+'" alt="" class="showImg"></div><p class="descTitle">'+item.school+'-'+item.title+'</p><p><input type="checkbox" class="checkbox" data-id='+item.id+'><label for=""></label>请选择</p><p class="t-count">票数：<span class="num">'+item.votes+'</span></p></div>';
+			                    });
+			                    $(".listBox").empty();
+			                    $(".listBox").append(html);
+			                    $(".checkbox").click()
+			                } else {
+			                    $("#alert_msg_id").html(data.resultMessage).show();                    
+			                }
+			            },
+			            error: function(data) {
+			                $("#alert_msg_id").html("网络连接错误").show();                
+			            }
+				    });
+		    	}
+		    	
+		    }
+		    // 提交投票结果
+		    function submitVotelist(voter,votes){
+		    	$.ajax({
+		    	url: Http_Header + "/xc/sjdWorksVotes",
+	            type: "POST",
+	            data: {
+	            	'voter':voter,
+	            	'votes':votes
+	            },
+	            dataType : 'json',
+	            success: function(data) {
+	            	console.log(data);
+	                if (data.resultCode == 200) {
+	                	$(".tips").text('您已成功投票！');
+	                    $(".successBox").show();
+	                } else if(data.resultCode == 400){
+	                	$(".tips").text('您已成功投票！');
+	                    $(".successBox").show();                 
+	                }
+	            },
+	            error: function(data) {
+	                $("#alert_msg_id").html("网络连接错误").show();                
+	            }
+		    });
+		    }
 		}); 
 	</script>
 </body>
